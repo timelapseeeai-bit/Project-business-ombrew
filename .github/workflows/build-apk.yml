@@ -32,10 +32,8 @@ jobs:
 
       - name: Build APK
         run: |
-          gradle -p extracted/OmbrewBusiness-v5.1 assembleDebug --no-daemon --max-workers=2
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: OmbrewBusiness-v5.1-debug-apk
-          path: extracted/OmbrewBusiness-v5.1/app/build/outputs/apk/debug/app-debug.apk
+          gradle -p extracted/OmbrewBusiness-v5.1 assembleDebug \
+            --no-daemon \
+            --max-workers=1 \
+            -Dorg.gradle.jvmargs="-Xmx4g -XX:MaxMetaspaceSize=1g -Dfile.encoding=UTF-8" \
+            -Dkotlin.compiler.execution.strategy=in-process
